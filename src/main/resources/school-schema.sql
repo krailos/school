@@ -16,12 +16,12 @@ DROP TYPE IF EXISTS gender CASCADE;
 DROP TYPE IF EXISTS week_day CASCADE;
 DROP TYPE IF EXISTS student_status CASCADE;
 
-CREATE TYPE gender AS enum ('ХЛОПЕЦЬ', 'ДІВЧИНА');
-CREATE TYPE week_day AS enum ('ПОНЕДІЛОК', 'ВІВТОРОК', 'СЕРЕДА','ЧЕТВЕР', 'ПЯТНИЦЯ','СУБОТА','НЕДІЛЯ');
-CREATE TYPE student_status AS enum ('УЧЕНЬ', 'ЛІД', 'ВІДМОВА', 'ТЕСТ' );
+CREATE TYPE gender AS ENUM ('ХЛОПЕЦЬ', 'ДІВЧИНА');
+CREATE TYPE week_day AS ENUM ('ПОНЕДІЛОК', 'ВІВТОРОК', 'СЕРЕДА','ЧЕТВЕР', 'ПЯТНИЦЯ','СУБОТА','НЕДІЛЯ');
+CREATE TYPE student_status AS ENUM ('УЧЕНЬ', 'ЛІД', 'ВІДМОВА', 'ТЕСТ' );
 
 CREATE TABLE company (
-    id serial NOT NULL,
+    id serial NOT NULL, 
     name character varying (50) NOT NULL,
     address character varying (200),
     phone character varying (50),
@@ -67,7 +67,7 @@ CREATE TABLE gang (
 
 CREATE TABLE student (
     id serial NOT NULL,
-    gangs_id int REFERENCES gang (id) ON UPDATE CASCADE ON DELETE CASCADE,   
+    gang_id int REFERENCES gang (id) ON UPDATE CASCADE ON DELETE CASCADE,   
     first_name character varying (50) NOT NULL,
     second_name character varying (50),
     last_name character varying (50) NOT NULL,

@@ -15,11 +15,15 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import com.krailo.school.config.SchoolConfig;
 import com.krailo.school.dao.AudienceDao;
 import com.krailo.school.dao.GangDao;
+import com.krailo.school.dao.StudentDao;
 import com.krailo.school.dao.SubjectDao;
 import com.krailo.school.dao.TeacherDao;
 import com.krailo.school.entity.Audience;
 import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Gang.GangBuilder;
+import com.krailo.school.entity.Gender;
+import com.krailo.school.entity.Student;
+import com.krailo.school.entity.StudentStatus;
 import com.krailo.school.entity.Teacher;
 import com.krailo.school.view.AppView;
 
@@ -44,30 +48,44 @@ public class SchoolSpringJdbcApplication {
         SubjectDao subjectDao = (SubjectDao) context.getBean(SubjectDao.class);
         TeacherDao teacherDao = (TeacherDao) context.getBean(TeacherDao.class);
         GangDao gangDao = (GangDao) context.getBean(GangDao.class);
+        StudentDao studentDao = (StudentDao) context.getBean(StudentDao.class);
 
         // ------------------ЗНАЙТИ ВСІХ -------------------
-        System.out.println(appView.viewGangs(gangDao.findAll()));
+        // System.out.println(appView.viewGangs(gangDao.findAll()));
+
+        // System.out.println(appView.viewStudents(studentDao.findAll()));
 
         // ------------------ЗНАЙТИ ПО ID ------------------------
-        System.out.println(appView.viewGang(gangDao.findById(1)));
+        // System.out.println(appView.viewGang(gangDao.findById(1)));
+
+        // System.out.println(appView.viewStudent(studentDao.findById(1)));
 
         // ----------------------СТОРИТИ НОВОГО-------------------
-        Gang gang = Gang.builder().name("Читарика-ОШ-2").description("Олена Шашчак 2 група")
-                .subject(subjectDao.findById(1)).teacher(teacherDao.findById(1)).build();
-        int id = gangDao.create(gang);
-        System.out.println(appView.viewGang(gangDao.findById(id)));
-        
-        
+//        Gang gang = Gang.builder().name("Читарика-ОШ-2").description("Олена Шашчак 2 група")
+//                .subject(subjectDao.findById(1)).teacher(teacherDao.findById(1)).build();
+//        int id = gangDao.create(gang);
+//        System.out.println(appView.viewGang(gangDao.findById(id)));
+
+        Student student = Student.builder().gang(gangDao.findById(1)).firstName("firstname").lastName("lastname")
+                .contactName("contactname").phone("0672222222").gender(Gender.ХЛОПЕЦЬ).studentStatus(StudentStatus.УЧЕНЬ).build();
+        int id = studentDao.create(student);
+        System.out.println(appView.viewStudent(studentDao.findById(id)));
 
         // -------------------ОБНОВИТИ НОВОГО---------------
-        gang = gangDao.findById(id);
-        gang.setName("new name");
-        gangDao.update(gang);
-        System.out.println(appView.viewGang(gangDao.findById(id)));
+//        gang = gangDao.findById(id);
+//        gang.setName("new name");
+//        gangDao.update(gang);
+//        System.out.println(appView.viewGang(gangDao.findById(id)));
+        
+      student = studentDao.findById(id);
+      student.setFirstName("new first name");
+      student.setGender(Gender.ДІВЧИНА);
+      studentDao.update(student);
+      System.out.println(appView.viewStudent(studentDao.findById(id)));
 
         // --------------------- ВИДАЛИТИ НОВОГО----------------
-        gangDao.deleteById(id);
-        System.out.println(appView.viewGangs(gangDao.findAll()));
+//        gangDao.deleteById(id);
+//        System.out.println(appView.viewGangs(gangDao.findAll()));
 
         context.close();
 
