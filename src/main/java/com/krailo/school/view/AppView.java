@@ -7,11 +7,30 @@ import org.springframework.stereotype.Component;
 
 import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Lesson;
+import com.krailo.school.entity.PriceSubject;
 import com.krailo.school.entity.Schedule;
 import com.krailo.school.entity.Student;
 
 @Component
 public class AppView {
+
+    public String viewpPriceSubjects(List<PriceSubject> priceSubject) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "id = %-3d | subject = %-15s | price = %-7s | name = %-10s | date = %-10s  ";
+        for (PriceSubject p : priceSubject) {
+            sb.append(String.format(viewFormat, p.getId(), p.getSubject().getName(), p.getPrice(), p.getName(),
+                    p.getDate()) + System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    public String viewpPriceSubject(PriceSubject p) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "id = %-3d | subject = %-15s | price = %-7s | name = %-10s | date = %-10s  ";
+        sb.append(String.format(viewFormat, p.getId(), p.getSubject().getName(), p.getPrice(), p.getName(), p.getDate())
+                + System.lineSeparator());
+        return sb.toString();
+    }
 
     public String viewLessons(List<Lesson> lesson) {
         StringBuilder sb = new StringBuilder();

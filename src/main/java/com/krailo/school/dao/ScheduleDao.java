@@ -18,7 +18,7 @@ import com.krailo.school.entity.Student;
 @Repository
 public class ScheduleDao {
 
-    private static final String SQL_SELECT_ALL_SCHEDULES = "SELECT * FROM schedule";
+    private static final String SQL_SELECT_ALL_SCHEDULES = "SELECT * FROM price_subject";
     private static final String SQL_SELECT_SCHEDULE_BY_ID = "SELECT * FROM schedule  WHERE id = ?";
     private static final String SQL_INSERT_SCHEDULE = """
             INSERT INTO schedule (audience_id, gang_id, week_day, start_time, end_time)

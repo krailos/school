@@ -20,6 +20,7 @@ import com.krailo.school.config.SchoolConfig;
 import com.krailo.school.dao.AudienceDao;
 import com.krailo.school.dao.GangDao;
 import com.krailo.school.dao.LessonDao;
+import com.krailo.school.dao.PriceSubjectDao;
 import com.krailo.school.dao.ScheduleDao;
 import com.krailo.school.dao.StudentDao;
 import com.krailo.school.dao.SubjectDao;
@@ -29,6 +30,7 @@ import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Gang.GangBuilder;
 import com.krailo.school.entity.Gender;
 import com.krailo.school.entity.Lesson;
+import com.krailo.school.entity.PriceSubject;
 import com.krailo.school.entity.Schedule;
 import com.krailo.school.entity.Student;
 import com.krailo.school.entity.StudentStatus;
@@ -60,6 +62,7 @@ public class SchoolSpringJdbcApplication {
         StudentDao studentDao = (StudentDao) context.getBean(StudentDao.class);
         ScheduleDao scheduleDao = (ScheduleDao) context.getBean(ScheduleDao.class);
         LessonDao lessonDao = (LessonDao) context.getBean(LessonDao.class);
+        PriceSubjectDao priceSubjectDao = (PriceSubjectDao) context.getBean(PriceSubjectDao.class);
 
         // ------------------ЗНАЙТИ ВСІХ -------------------
         System.out.println("----FIND ALL---");
@@ -73,6 +76,8 @@ public class SchoolSpringJdbcApplication {
 //        
 //        System.out.println(appView.viewLessons(lessonDao.findAll()));
 
+        System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
+
         // ------------------ЗНАЙТИ ПО ID ------------------------
         System.out.println("----FIND BY ID---");
         // System.out.println(appView.viewGang(gangDao.findById(1)));
@@ -80,12 +85,13 @@ public class SchoolSpringJdbcApplication {
         // System.out.println(appView.viewStudent(studentDao.findById(1)));
 
 //        System.out.println(appView.viewSchedule(scheduleDao.findById(1)));
-        
-        
+
 //        Lesson lesson = lessonDao.findById(1);
 //        System.out.println(appView.viewLesson(lesson));
 //        System.out.println(appView.viewStudents(lesson.getStudents()));
 //        System.out.println(appView.viewStudents(studentDao.findByLessonId(1)));
+
+        System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(1)));
 
         // ----------------------СТОРИТИ НОВОГО-------------------
         System.out.println("----CREATE NEW---");
@@ -111,6 +117,11 @@ public class SchoolSpringJdbcApplication {
 //        System.out.println(appView.viewStudents(stds));
 //        int id = lessonDao.create(les);
 //        System.out.println(appView.viewLesson(lessonDao.findById(id)));
+
+        PriceSubject priceSubject = PriceSubject.builder().subject(subjectDao.findById(1)).price(150).name("new price")
+                .date(LocalDate.of(2025, 9, 2)).build();
+        int id = priceSubjectDao.create(priceSubject);
+        System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(id)));
 
         // -------------------ОБНОВИТИ НОВОГО---------------
         System.out.println("----UPDATE---");
@@ -138,6 +149,11 @@ public class SchoolSpringJdbcApplication {
 //        System.out.println(appView.viewLesson(lessonDao.findById(id)));
 //        System.out.println(appView.viewStudents(lessonDao.findById(id).getStudents()));
 
+        priceSubject = priceSubjectDao.findById(id);
+        priceSubject.setPrice(130);
+        priceSubjectDao.update(priceSubject);
+        System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(id)));
+
         // --------------------- ВИДАЛИТИ НОВОГО----------------
         System.out.println("----DELETE---");
 //        gangDao.deleteById(id);
@@ -153,6 +169,9 @@ public class SchoolSpringJdbcApplication {
 //        lessonDao.deleteById(id);
 //        System.out.println(appView.viewLessons(lessonDao.findAll()));
 
+        System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
+        priceSubjectDao.deleteById(id);
+        System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
 
         context.close();
 
