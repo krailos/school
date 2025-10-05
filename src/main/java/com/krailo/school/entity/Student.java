@@ -38,7 +38,7 @@ public class Student {
         this.gender = gender;
         this.studentStatus = studentStatus;
         this.birthDate = birthDate;
-        this.description = description;
+        this.description = description;   
     }
 
     public Student(int id, Gang gang, String firstName, String lastName, String contactName, String phone) {
@@ -153,6 +153,7 @@ public class Student {
     public void setDescription(String description) {
         this.description = description;
     }
+    
 
     @Override
     public String toString() {
@@ -162,10 +163,11 @@ public class Student {
                 + birthDate + ", description=" + description + "]";
     }
 
+  
     @Override
     public int hashCode() {
-        return Objects.hash(address, birthDate, contactName, description, email, firstName, gang, gender, id, lastName,
-                phone, secondName, studentStatus);
+        return Objects.hash(address, birthDate, contactName, description, email, firstName, gang, gender, id,
+                lastName, phone, secondName, studentStatus);
     }
 
     @Override
@@ -181,8 +183,8 @@ public class Student {
                 && Objects.equals(contactName, other.contactName) && Objects.equals(description, other.description)
                 && Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
                 && Objects.equals(gang, other.gang) && gender == other.gender && id == other.id
-                && Objects.equals(lastName, other.lastName) && Objects.equals(phone, other.phone)
-                && Objects.equals(secondName, other.secondName) && studentStatus == other.studentStatus;
+                && Objects.equals(phone, other.phone) && Objects.equals(secondName, other.secondName)
+                && studentStatus == other.studentStatus;
     }
 
     public static StudentBuilder builder() {
@@ -204,6 +206,7 @@ public class Student {
         private StudentStatus studentStatus;
         private LocalDate birthDate;
         private String description;
+     
 
         public StudentBuilder id(int id) {
             this.id = id;
@@ -269,6 +272,8 @@ public class Student {
             this.gender = gender;
             return this;
         }
+        
+     
 
         public Student build() {
             return new Student(id, gang, firstName, secondName, lastName, contactName, phone, email, address, gender,

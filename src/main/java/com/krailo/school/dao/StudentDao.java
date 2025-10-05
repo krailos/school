@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.krailo.school.dao.mapper.StudentRowMapper;
+import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Gender;
 import com.krailo.school.entity.Student;
 import com.krailo.school.entity.Teacher;
@@ -25,11 +26,18 @@ public class StudentDao {
             gender, student_status,  birth_date, description)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, CAST (? AS gender), CAST (? AS student_status), ?, ?)
             """;
-    private static final String SQL_DELETE_BY_ID = "DELETE FROM student WHERE id = ?";
     private static final String SQL_UPDATE_BY_ID = """
             UPDATE student SET gang_id = ?, first_name = ?, second_name = ?, last_name = ?,
             contact_name = ?, phone = ?, email = ?, address = ?,
             gender = CAST (? as gender), student_status = CAST (? as student_status),  birth_date = ?, description = ? where id = ?""";
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM student WHERE id = ?";
+    private static final String SQL_SELECT_STUDENTS_BY_GANG_ID = "SELECT * FROM student  WHERE gang_id = ?";
+    private static final String SQL_SELECT_STUDENTS_BY_LESSON_ID = """
+            SELECT s.id, s.gang_id, s.first_name,  s.second_name, s.last_name,
+            s.contact_name, s.phone, s.email, s.address, s.gender, s.student_status, s.birth_date, s.description
+            FROM lessons_students ls
+            JOIN student s ON ls.student_id = s.id
+            WHERE lesson_id = ? """;
 
     private JdbcTemplate jdbcTemplate;
     private StudentRowMapper studentRowMapper;
@@ -75,6 +83,18 @@ public class StudentDao {
                 student.getEmail(), student.getAddress(), student.getGender().name(), student.getStudentStatus().name(),
                 Optional.ofNullable(student.getBirthDate()).map(d -> Date.valueOf(d)).orElse(null),
                 student.getDescription(), student.getId());
+    }
+
+    public void deleteById(int id) {
+        jdbcTemplate.update(SQL_DELETE_BY_ID, id);
+    }
+
+    public List<Student> findByGangId(int gangId) {
+        return jdbcTemplate.query(SQL_SELECT_STUDENTS_BY_GANG_ID, studentRowMapper, gangId);
+    }
+
+    public List<Student> findByLessonId(int lessonId) {
+        return jdbcTemplate.query(SQL_SELECT_STUDENTS_BY_LESSON_ID, studentRowMapper, lessonId);
     }
 
 }

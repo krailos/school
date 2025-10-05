@@ -1,0 +1,139 @@
+package com.krailo.school.entity;
+
+import java.time.LocalDate;
+import java.util.Objects;
+
+public class PriceSubject {
+
+    private int id;
+    private String name;
+    private int price;
+    private Subject subject;
+    private LocalDate date;
+
+    public PriceSubject() {
+
+    }
+
+    public PriceSubject(int id, String name, int price, Subject subject, LocalDate date) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.subject = subject;
+        this.date = date;
+    }
+
+    public PriceSubject(String name, int price, Subject subject, LocalDate date) {
+        this.name = name;
+        this.price = price;
+        this.subject = subject;
+        this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "PriceSubject [id=" + id + ", name=" + name + ", price=" + price + ", subjec=" + subject + ", date="
+                + date + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, id, name, price, subject);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PriceSubject other = (PriceSubject) obj;
+        return Objects.equals(date, other.date) && id == other.id && Objects.equals(name, other.name)
+                && price == other.price && Objects.equals(subject, other.subject);
+    }
+    
+    public static PriceSubjectBuilder builder () {
+        return new PriceSubjectBuilder();
+    }
+
+    public static class PriceSubjectBuilder {
+        private int id;
+        private String name;
+        private int price;
+        private Subject subject;
+        private LocalDate date;
+
+        public PriceSubjectBuilder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public PriceSubjectBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public PriceSubjectBuilder price(int price) {
+            this.price = price;
+            return this;
+        }
+
+        public PriceSubjectBuilder subject(Subject subject) {
+            this.subject = subject;
+            return this;
+        }
+
+        public PriceSubjectBuilder date(LocalDate date) {
+            this.date = date;
+            return this;
+        }
+
+        public PriceSubject build() {
+            return new PriceSubject(id, name, price, subject, date);
+        }
+
+    }
+
+}

@@ -8,9 +8,11 @@ DROP TABLE IF EXISTS subject_price CASCADE;
 DROP TABLE IF EXISTS students_gangs CASCADE;
 DROP TABLE IF EXISTS schedule CASCADE;
 DROP TABLE IF EXISTS lesson CASCADE;
-DROP TABLE IF EXISTS students_lessons CASCADE;
+DROP TABLE IF EXISTS lessons_students CASCADE;
 DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS discount CASCADE;
+DROP TABLE IF EXISTS price_subject CASCADE;
+
 
 DROP TYPE IF EXISTS gender CASCADE;
 DROP TYPE IF EXISTS week_day CASCADE;
@@ -100,7 +102,7 @@ CREATE TABLE students_gangs (
 CREATE TABLE schedule (
     id serial NOT NULL,
     audience_id int REFERENCES audience (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    gangs_id int REFERENCES gang (id) ON UPDATE CASCADE ON DELETE CASCADE, 
+    gang_id int REFERENCES gang (id) ON UPDATE CASCADE ON DELETE CASCADE, 
     week_day week_day NOT NULL,
     start_time time NOT NULL,
     end_time time NOT NULL,
@@ -114,10 +116,10 @@ CREATE TABLE lesson (
     CONSTRAINT lesson__pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE students_lessons (
+CREATE TABLE lessons_students (
     id serial NOT NULL,
-    student_id int REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    lesson_id int REFERENCES lesson (id) ON UPDATE CASCADE ON DELETE CASCADE,   
+    lesson_id int REFERENCES lesson (id) ON UPDATE CASCADE ON DELETE CASCADE, 
+    student_id int REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE, 
     CONSTRAINT students_lessons__pkey PRIMARY KEY (id), UNIQUE (student_id, lesson_id)
 );
 
@@ -133,9 +135,19 @@ CREATE TABLE payment (
 
 CREATE TABLE discount (
     id serial NOT NULL,
-    student_id int REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    name character varying (50) NOT NULL,
     subject_id int REFERENCES subject (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    rate int NOT NULL,
-    description character varying (150),
+    student_id int REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    discount int NOT NULL,
+    price_date date NOT NULL,
     CONSTRAINT discount__pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE price_subject (
+    id serial NOT NULL,
+    name character varying (50) NOT NULL,
+    subject_id int REFERENCES subject (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    price int NOT NULL,
+    price_date date NOT NULL,
+    CONSTRAINT price__subject PRIMARY KEY (id), UNIQUE (subject_id, price_date)
 );
