@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS lesson CASCADE;
 DROP TABLE IF EXISTS lessons_students CASCADE;
 DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS discount CASCADE;
-DROP TABLE IF EXISTS price_subject CASCADE;
+DROP TABLE IF EXISTS price CASCADE;
 
 
 DROP TYPE IF EXISTS gender CASCADE;
@@ -139,15 +139,15 @@ CREATE TABLE discount (
     subject_id int REFERENCES subject (id) ON UPDATE CASCADE ON DELETE CASCADE,
     student_id int REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
     discount int NOT NULL,
-    price_date date NOT NULL,
-    CONSTRAINT discount__pkey PRIMARY KEY (id)
+    discount_date date NOT NULL,
+    CONSTRAINT discount__pkey PRIMARY KEY (id), UNIQUE (subject_id, student_id, discount_date)
 );
 
-CREATE TABLE price_subject (
+CREATE TABLE price (
     id serial NOT NULL,
     name character varying (50) NOT NULL,
     subject_id int REFERENCES subject (id) ON UPDATE CASCADE ON DELETE CASCADE,
     price int NOT NULL,
     price_date date NOT NULL,
-    CONSTRAINT price__subject PRIMARY KEY (id), UNIQUE (subject_id, price_date)
+    CONSTRAINT price__pk PRIMARY KEY (id), UNIQUE (subject_id, price_date)
 );

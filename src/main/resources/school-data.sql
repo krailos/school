@@ -61,11 +61,15 @@ INSERT INTO lessons_students (lesson_id, student_id) VALUES
 ('3', '2'),
 ('3', '3');
 
-
-INSERT INTO price_subject (subject_id, name, price, price_date) VALUES
+INSERT INTO price (subject_id, name, price, price_date) VALUES
 ('1', 'базова', '100', '09.001.2025'),
 ('2', 'базова', '100', '09.001.2025'),
 ('3', 'базова', '100', '09.001.2025'),
 ('4', 'базова', '100', '09.001.2025');
+
+INSERT INTO discount (subject_id, student_id, name, discount, discount_date) VALUES
+('1', '1', 'другий курс', '50', '09.001.2025'),
+('1', '2', 'убд', '50', '09.001.2025');
+
 
 

@@ -3,7 +3,7 @@ package com.krailo.school.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class PriceSubject {
+public class Price {
 
     private int id;
     private String name;
@@ -11,11 +11,11 @@ public class PriceSubject {
     private Subject subject;
     private LocalDate date;
 
-    public PriceSubject() {
+    public Price() {
 
     }
 
-    public PriceSubject(int id, String name, int price, Subject subject, LocalDate date) {
+    public Price(int id, String name, int price, Subject subject, LocalDate date) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -23,7 +23,7 @@ public class PriceSubject {
         this.date = date;
     }
 
-    public PriceSubject(String name, int price, Subject subject, LocalDate date) {
+    public Price(String name, int price, Subject subject, LocalDate date) {
         this.name = name;
         this.price = price;
         this.subject = subject;
@@ -89,7 +89,7 @@ public class PriceSubject {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        PriceSubject other = (PriceSubject) obj;
+        Price other = (Price) obj;
         return Objects.equals(date, other.date) && id == other.id && Objects.equals(name, other.name)
                 && price == other.price && Objects.equals(subject, other.subject);
     }
@@ -130,8 +130,8 @@ public class PriceSubject {
             return this;
         }
 
-        public PriceSubject build() {
-            return new PriceSubject(id, name, price, subject, date);
+        public Price build() {
+            return new Price(id, name, price, subject, date);
         }
 
     }

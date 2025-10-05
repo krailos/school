@@ -5,26 +5,45 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
+import com.krailo.school.entity.Discount;
 import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Lesson;
-import com.krailo.school.entity.PriceSubject;
+import com.krailo.school.entity.Price;
 import com.krailo.school.entity.Schedule;
 import com.krailo.school.entity.Student;
 
 @Component
 public class AppView {
 
-    public String viewpPriceSubjects(List<PriceSubject> priceSubject) {
+    public String viewpDiscounts(List<Discount> discount) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "id = %-3d | subjectId = %-3d | studentId = %-3d | discount = %-7s | name = %-10s | date = %-10s  ";
+        for (Discount d : discount) {
+            sb.append(String.format(viewFormat, d.getId(), d.getSubject().getId(), d.getStudent().getId(),
+                    d.getDiscount(), d.getName(), d.getDate()) + System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    public String viewpDiscount(Discount d) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "id = %-3d | subjectId = %-3d | studentId = %-3d | discount = %-7s | name = %-10s | date = %-10s  ";
+        sb.append(String.format(viewFormat, d.getId(), d.getSubject().getId(), d.getStudent().getId(), d.getDiscount(),
+                d.getName(), d.getDate()) + System.lineSeparator());
+        return sb.toString();
+    }
+
+    public String viewpPriceSubjects(List<Price> priceSubject) {
         StringBuilder sb = new StringBuilder();
         String viewFormat = "id = %-3d | subject = %-15s | price = %-7s | name = %-10s | date = %-10s  ";
-        for (PriceSubject p : priceSubject) {
+        for (Price p : priceSubject) {
             sb.append(String.format(viewFormat, p.getId(), p.getSubject().getName(), p.getPrice(), p.getName(),
                     p.getDate()) + System.lineSeparator());
         }
         return sb.toString();
     }
 
-    public String viewpPriceSubject(PriceSubject p) {
+    public String viewpPriceSubject(Price p) {
         StringBuilder sb = new StringBuilder();
         String viewFormat = "id = %-3d | subject = %-15s | price = %-7s | name = %-10s | date = %-10s  ";
         sb.append(String.format(viewFormat, p.getId(), p.getSubject().getName(), p.getPrice(), p.getName(), p.getDate())

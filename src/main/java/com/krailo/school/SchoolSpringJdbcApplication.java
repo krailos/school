@@ -18,19 +18,21 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import com.krailo.school.config.SchoolConfig;
 import com.krailo.school.dao.AudienceDao;
+import com.krailo.school.dao.DiscountDao;
 import com.krailo.school.dao.GangDao;
 import com.krailo.school.dao.LessonDao;
-import com.krailo.school.dao.PriceSubjectDao;
+import com.krailo.school.dao.PriceDao;
 import com.krailo.school.dao.ScheduleDao;
 import com.krailo.school.dao.StudentDao;
 import com.krailo.school.dao.SubjectDao;
 import com.krailo.school.dao.TeacherDao;
 import com.krailo.school.entity.Audience;
+import com.krailo.school.entity.Discount;
 import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Gang.GangBuilder;
 import com.krailo.school.entity.Gender;
 import com.krailo.school.entity.Lesson;
-import com.krailo.school.entity.PriceSubject;
+import com.krailo.school.entity.Price;
 import com.krailo.school.entity.Schedule;
 import com.krailo.school.entity.Student;
 import com.krailo.school.entity.StudentStatus;
@@ -62,7 +64,8 @@ public class SchoolSpringJdbcApplication {
         StudentDao studentDao = (StudentDao) context.getBean(StudentDao.class);
         ScheduleDao scheduleDao = (ScheduleDao) context.getBean(ScheduleDao.class);
         LessonDao lessonDao = (LessonDao) context.getBean(LessonDao.class);
-        PriceSubjectDao priceSubjectDao = (PriceSubjectDao) context.getBean(PriceSubjectDao.class);
+        PriceDao priceDao = (PriceDao) context.getBean(PriceDao.class);
+        DiscountDao discountDao = (DiscountDao) context.getBean(DiscountDao.class);
 
         // ------------------ЗНАЙТИ ВСІХ -------------------
         System.out.println("----FIND ALL---");
@@ -76,7 +79,9 @@ public class SchoolSpringJdbcApplication {
 //        
 //        System.out.println(appView.viewLessons(lessonDao.findAll()));
 
-        System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
+ //       System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
+        
+        System.out.println(appView.viewpDiscounts(discountDao.findAll()));
 
         // ------------------ЗНАЙТИ ПО ID ------------------------
         System.out.println("----FIND BY ID---");
@@ -91,7 +96,9 @@ public class SchoolSpringJdbcApplication {
 //        System.out.println(appView.viewStudents(lesson.getStudents()));
 //        System.out.println(appView.viewStudents(studentDao.findByLessonId(1)));
 
-        System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(1)));
+ //       System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(1)));
+        
+        System.out.println(appView.viewpDiscount(discountDao.findById(1)));
 
         // ----------------------СТОРИТИ НОВОГО-------------------
         System.out.println("----CREATE NEW---");
@@ -118,10 +125,16 @@ public class SchoolSpringJdbcApplication {
 //        int id = lessonDao.create(les);
 //        System.out.println(appView.viewLesson(lessonDao.findById(id)));
 
-        PriceSubject priceSubject = PriceSubject.builder().subject(subjectDao.findById(1)).price(150).name("new price")
-                .date(LocalDate.of(2025, 9, 2)).build();
-        int id = priceSubjectDao.create(priceSubject);
-        System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(id)));
+//        Price priceSubject = Price.builder().subject(subjectDao.findById(1)).price(150).name("new price")
+//                .date(LocalDate.of(2025, 9, 2)).build();
+//        int id = priceDao.create(priceSubject);
+//        System.out.println(appView.viewpPriceSubject(priceDao.findById(id)));
+        
+        
+        Discount discount  = Discount.builder().subject(subjectDao.findById(1)).student(studentDao.findById(3)).
+                name("second cours").date(LocalDate.of(2025, 9, 1)).discount(50).build();
+        int id = discountDao.create(discount);
+        System.out.println(appView.viewpDiscount(discountDao.findById(id)));
 
         // -------------------ОБНОВИТИ НОВОГО---------------
         System.out.println("----UPDATE---");
@@ -149,10 +162,15 @@ public class SchoolSpringJdbcApplication {
 //        System.out.println(appView.viewLesson(lessonDao.findById(id)));
 //        System.out.println(appView.viewStudents(lessonDao.findById(id).getStudents()));
 
-        priceSubject = priceSubjectDao.findById(id);
-        priceSubject.setPrice(130);
-        priceSubjectDao.update(priceSubject);
-        System.out.println(appView.viewpPriceSubject(priceSubjectDao.findById(id)));
+//        priceSubject = priceDao.findById(id);
+//        priceSubject.setPrice(130);
+//        priceDao.update(priceSubject);
+//        System.out.println(appView.viewpPriceSubject(priceDao.findById(id)));
+        
+      discount = discountDao.findById(id);
+      discount.setDiscount(30);
+      discountDao.update(discount);
+      System.out.println(appView.viewpDiscount(discountDao.findById(id)));
 
         // --------------------- ВИДАЛИТИ НОВОГО----------------
         System.out.println("----DELETE---");
@@ -169,9 +187,15 @@ public class SchoolSpringJdbcApplication {
 //        lessonDao.deleteById(id);
 //        System.out.println(appView.viewLessons(lessonDao.findAll()));
 
-        System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
-        priceSubjectDao.deleteById(id);
-        System.out.println(appView.viewpPriceSubjects(priceSubjectDao.findAll()));
+//        System.out.println(appView.viewpPriceSubjects(priceDao.findAll()));
+//        priceDao.deleteById(id);
+//        System.out.println(appView.viewpPriceSubjects(priceDao.findAll()));
+        
+        System.out.println(appView.viewpDiscounts(discountDao.findAll()));
+        discountDao.deleteById(id);
+        System.out.println(appView.viewpDiscounts(discountDao.findAll()));
+
+
 
         context.close();
 

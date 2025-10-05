@@ -9,21 +9,21 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.krailo.school.dao.SubjectDao;
-import com.krailo.school.entity.PriceSubject;
+import com.krailo.school.entity.Price;
 
 @Component
-public class PriceSubjectRowMapper implements RowMapper<PriceSubject> {
+public class PriceRowMapper implements RowMapper<Price> {
 
     SubjectDao subjectDao;
 
-    public PriceSubjectRowMapper(SubjectDao subjectDao) {
+    public PriceRowMapper(SubjectDao subjectDao) {
         super();
         this.subjectDao = subjectDao;
     }
 
     @Override
-    public PriceSubject mapRow(ResultSet rs, int rowNum) throws SQLException {
-        PriceSubject priceSubject = new PriceSubject();
+    public Price mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Price priceSubject = new Price();
         priceSubject.setId(rs.getInt("id"));
         priceSubject.setName(rs.getString("name"));
         priceSubject.setPrice(rs.getInt("price"));
