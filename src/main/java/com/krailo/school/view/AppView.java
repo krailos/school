@@ -8,12 +8,32 @@ import org.springframework.stereotype.Component;
 import com.krailo.school.entity.Discount;
 import com.krailo.school.entity.Gang;
 import com.krailo.school.entity.Lesson;
+import com.krailo.school.entity.Payment;
 import com.krailo.school.entity.Price;
 import com.krailo.school.entity.Schedule;
 import com.krailo.school.entity.Student;
 
 @Component
 public class AppView {
+    
+    public String viewpPayments(List<Payment> payment) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "id = %-3d | studentId = %-3d | sum = %-7s | description = %-10s | date = %-10s  ";
+        for (Payment p : payment) {
+            sb.append(String.format(viewFormat, p.getId(), p.getStudent().getId(), p.getSum(),
+                    p.getDescription(), p.getDate()) + System.lineSeparator());
+        }
+        return sb.toString();
+    }
+    
+    public String viewpPayment(Payment p) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "id = %-3d | studentId = %-3d | sum = %-7s | description = %-10s | date = %-10s  ";        
+            sb.append(String.format(viewFormat, p.getId(), p.getStudent().getId(), p.getSum(),
+                    p.getDescription(), p.getDate()) + System.lineSeparator());       
+        return sb.toString();
+    }
+
 
     public String viewpDiscounts(List<Discount> discount) {
         StringBuilder sb = new StringBuilder();

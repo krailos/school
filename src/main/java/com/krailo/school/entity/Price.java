@@ -94,38 +94,38 @@ public class Price {
                 && price == other.price && Objects.equals(subject, other.subject);
     }
     
-    public static PriceSubjectBuilder builder () {
-        return new PriceSubjectBuilder();
+    public static PriceBuilder builder () {
+        return new PriceBuilder();
     }
 
-    public static class PriceSubjectBuilder {
+    public static class PriceBuilder {
         private int id;
         private String name;
         private int price;
         private Subject subject;
         private LocalDate date;
 
-        public PriceSubjectBuilder id(int id) {
+        public PriceBuilder id(int id) {
             this.id = id;
             return this;
         }
 
-        public PriceSubjectBuilder name(String name) {
+        public PriceBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public PriceSubjectBuilder price(int price) {
+        public PriceBuilder price(int price) {
             this.price = price;
             return this;
         }
 
-        public PriceSubjectBuilder subject(Subject subject) {
+        public PriceBuilder subject(Subject subject) {
             this.subject = subject;
             return this;
         }
 
-        public PriceSubjectBuilder date(LocalDate date) {
+        public PriceBuilder date(LocalDate date) {
             this.date = date;
             return this;
         }

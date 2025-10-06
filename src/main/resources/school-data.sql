@@ -71,5 +71,10 @@ INSERT INTO discount (subject_id, student_id, name, discount, discount_date) VAL
 ('1', '1', 'другий курс', '50', '09.001.2025'),
 ('1', '2', 'убд', '50', '09.001.2025');
 
+INSERT INTO payment (student_id, payment_sum, description, payment_date) VALUES
+('1', '1000', 'платіж за курс', '09.01.2025'),
+('2', '1000', 'платіж за курс', '09.01.2025'),
+('3', '1000', 'платіж за курс', '09.01.2025');
+
 
 

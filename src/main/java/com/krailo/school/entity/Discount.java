@@ -3,7 +3,7 @@ package com.krailo.school.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.krailo.school.entity.Price.PriceSubjectBuilder;
+import com.krailo.school.entity.Price.PriceBuilder;
 
 public class Discount {
 
