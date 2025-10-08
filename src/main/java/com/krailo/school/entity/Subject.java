@@ -1,12 +1,14 @@
 package com.krailo.school.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Subject {
 
     private int id;
     private String name;
-    private String description;
+    private String description;    
+    private List<Price> prices;
 
     public Subject() {
     }
@@ -48,6 +50,16 @@ public class Subject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    
+
+    public List<Price> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(List<Price> prices) {
+        this.prices = prices;
     }
 
     @Override

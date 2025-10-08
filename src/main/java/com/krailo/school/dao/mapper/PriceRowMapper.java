@@ -17,7 +17,6 @@ public class PriceRowMapper implements RowMapper<Price> {
     SubjectDao subjectDao;
 
     public PriceRowMapper(SubjectDao subjectDao) {
-        super();
         this.subjectDao = subjectDao;
     }
 

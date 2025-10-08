@@ -16,8 +16,10 @@ import com.krailo.school.entity.Price;
 @Repository
 public class DiscountDao {
 
-    private static final String SQL_SELECT_ALL_DISCOUNT = "SELECT * FROM discount";
-    private static final String SQL_SELECT_DISCOUNT_BY_ID = "SELECT * FROM discount  WHERE id = ?";
+    private static final String SQL_SELECT_ALl = "SELECT * FROM discount";
+    private static final String SQL_SELECT_BY_DISCOUNT_ID = "SELECT * FROM discount  WHERE id = ?";
+    private static final String SQL_SELECT_BY_STUDENT_ID = "SELECT * FROM discount  WHERE student_id = ?";
+    private static final String SQL_SELECT_BY_STUDENT_ID_AND_SUBJECT_ID = "SELECT * FROM discount  WHERE student_id = ? AND subject_id = ?";
     private static final String SQL_INSERT_DISCOUNT = """
             INSERT INTO discount (subject_id, student_id, discount, name, discount_date)
             VALUES (?, ?, ?, ?, ?)
@@ -37,11 +39,11 @@ public class DiscountDao {
     }
 
     public List<Discount> findAll() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_DISCOUNT, discountRowMapper);
+        return jdbcTemplate.query(SQL_SELECT_ALl, discountRowMapper);
     }
     
     public Discount findById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_DISCOUNT_BY_ID, discountRowMapper, id);
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_DISCOUNT_ID, discountRowMapper, id);
     }
     
     public int create(Discount discount) {
@@ -66,6 +68,15 @@ public class DiscountDao {
 
     public void deleteById(int id) {
         jdbcTemplate.update(SQL_DELETE_BY_ID, id);
+    }
+    
+    
+    public List<Discount> findByStudentId (int studentId) {
+        return jdbcTemplate.query(SQL_SELECT_BY_STUDENT_ID, discountRowMapper, studentId);
+    }
+
+    public List<Discount> findByStudentIdAndSubjectId (int studentId, int subject_id) {
+        return jdbcTemplate.query(SQL_SELECT_BY_STUDENT_ID_AND_SUBJECT_ID, discountRowMapper, studentId, subject_id);
     }
 
 }

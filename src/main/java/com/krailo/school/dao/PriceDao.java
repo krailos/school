@@ -18,7 +18,8 @@ import com.krailo.school.entity.Schedule;
 public class PriceDao {
 
     private static final String SQL_SELECT_ALL_PRICE = "SELECT * FROM price";
-    private static final String SQL_SELECT_PRICE_BY_ID = "SELECT * FROM price  WHERE id = ?";
+    private static final String SQL_SELECT_BY_PRICE_ID = "SELECT * FROM price  WHERE id = ?";
+    private static final String SQL_SELECT_BY_SUBJECT_ID = "SELECT * FROM price  WHERE subject_id = ?";
     private static final String SQL_INSERT_PRICE = """
             INSERT INTO price (subject_id, price, name, price_date)
             VALUES (?, ?, ?, ?)
@@ -42,7 +43,7 @@ public class PriceDao {
     }
 
     public Price findById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_PRICE_BY_ID, priceSubjectRowMapper, id);
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_PRICE_ID, priceSubjectRowMapper, id);
     }
 
     public int create(Price priceSubject) {
@@ -66,6 +67,10 @@ public class PriceDao {
 
     public void deleteById(int id) {
         jdbcTemplate.update(SQL_DELETE_BY_ID, id);
+    }
+    
+    public List<Price> findBySubjectId(int sybjectId) {
+        return jdbcTemplate.query(SQL_SELECT_BY_SUBJECT_ID, priceSubjectRowMapper, sybjectId);
     }
     
 }

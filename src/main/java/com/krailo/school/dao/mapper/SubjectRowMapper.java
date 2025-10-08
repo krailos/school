@@ -6,10 +6,17 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.krailo.school.dao.PriceDao;
 import com.krailo.school.entity.Subject;
 
 @Component
 public class SubjectRowMapper implements RowMapper<Subject> {
+
+//    PriceDao priceDao;
+//
+//    public SubjectRowMapper(PriceDao priceDao) {
+//        this.priceDao = priceDao;
+//    }
 
     @Override
     public Subject mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -17,6 +24,7 @@ public class SubjectRowMapper implements RowMapper<Subject> {
         subject.setId(rs.getInt("id"));
         subject.setName(rs.getString("name"));
         subject.setDescription(rs.getString("description"));
+//        subject.setPrices(priceDao.findBySubjectId(rs.getInt("id")));
         return subject;
     }
 

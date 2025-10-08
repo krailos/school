@@ -12,28 +12,47 @@ import com.krailo.school.entity.Payment;
 import com.krailo.school.entity.Price;
 import com.krailo.school.entity.Schedule;
 import com.krailo.school.entity.Student;
+import com.krailo.school.service.Bill;
+import com.krailo.school.service.ItemBill;
 
 @Component
 public class AppView {
-    
+
+    public String viewItems(List<ItemBill> biilItems) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "lessonId = %-3d | subject = %-10s | price = %-5d | student name = %-10s | discount = %-5d | lessonDate = %-10s ";
+        for (ItemBill b : biilItems) {
+            sb.append(String.format(viewFormat,b.getLesson().getId(), b.getSubject().getName(), b.getPrice().getPrice(),
+                    b.getStudent().getFirstName(), b.getDiscount().getDiscount(), b.getDate()) + System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    public String viewItem(ItemBill b) {
+        StringBuilder sb = new StringBuilder();
+        String viewFormat = "lessonId = %-3d | subject = %-10s | price = %-5d | student name = %-10s | discount = %-5d | lessonDate = %-10s ";
+        sb.append(String.format(viewFormat,b.getLesson().getId(), b.getSubject().getName(), b.getPrice().getPrice(),
+                b.getStudent().getFirstName(), b.getDiscount().getDiscount(), b.getDate()) + System.lineSeparator());
+        return sb.toString();
+    }
+
     public String viewpPayments(List<Payment> payment) {
         StringBuilder sb = new StringBuilder();
         String viewFormat = "id = %-3d | studentId = %-3d | sum = %-7s | description = %-10s | date = %-10s  ";
         for (Payment p : payment) {
-            sb.append(String.format(viewFormat, p.getId(), p.getStudent().getId(), p.getSum(),
-                    p.getDescription(), p.getDate()) + System.lineSeparator());
+            sb.append(String.format(viewFormat, p.getId(), p.getStudent().getId(), p.getSum(), p.getDescription(),
+                    p.getDate()) + System.lineSeparator());
         }
         return sb.toString();
     }
-    
+
     public String viewpPayment(Payment p) {
         StringBuilder sb = new StringBuilder();
-        String viewFormat = "id = %-3d | studentId = %-3d | sum = %-7s | description = %-10s | date = %-10s  ";        
-            sb.append(String.format(viewFormat, p.getId(), p.getStudent().getId(), p.getSum(),
-                    p.getDescription(), p.getDate()) + System.lineSeparator());       
+        String viewFormat = "id = %-3d | studentId = %-3d | sum = %-7s | description = %-10s | date = %-10s  ";
+        sb.append(String.format(viewFormat, p.getId(), p.getStudent().getId(), p.getSum(), p.getDescription(),
+                p.getDate()) + System.lineSeparator());
         return sb.toString();
     }
-
 
     public String viewpDiscounts(List<Discount> discount) {
         StringBuilder sb = new StringBuilder();
@@ -73,7 +92,7 @@ public class AppView {
 
     public String viewLessons(List<Lesson> lesson) {
         StringBuilder sb = new StringBuilder();
-        String viewFormat = "id = %-3d | scheduleId = %-3d | lessonDate = %-10s | studentCount = %-3d  ";
+        String viewFormat = "lesson_id = %-3d | scheduleId = %-3d | lessonDate = %-10s | studentCount = %-3d  ";
         for (Lesson l : lesson) {
             sb.append(String.format(viewFormat, l.getId(), l.getSchedule().getId(), l.getLessonDate(),
                     l.getStudents().size()) + System.lineSeparator());

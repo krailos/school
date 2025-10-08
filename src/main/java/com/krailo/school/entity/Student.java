@@ -1,6 +1,7 @@
 package com.krailo.school.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class Student {
@@ -18,6 +19,7 @@ public class Student {
     private StudentStatus studentStatus;
     private LocalDate birthDate;
     private String description;
+    private List<Discount> discounts;
 
     public Student() {
 
@@ -38,7 +40,7 @@ public class Student {
         this.gender = gender;
         this.studentStatus = studentStatus;
         this.birthDate = birthDate;
-        this.description = description;   
+        this.description = description;
     }
 
     public Student(int id, Gang gang, String firstName, String lastName, String contactName, String phone) {
@@ -153,7 +155,14 @@ public class Student {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
+    }
 
     @Override
     public String toString() {
@@ -163,11 +172,10 @@ public class Student {
                 + birthDate + ", description=" + description + "]";
     }
 
-  
     @Override
     public int hashCode() {
-        return Objects.hash(address, birthDate, contactName, description, email, firstName, gang, gender, id,
-                lastName, phone, secondName, studentStatus);
+        return Objects.hash(address, birthDate, contactName, description, email, firstName, gang, gender, id, lastName,
+                phone, secondName, studentStatus);
     }
 
     @Override
@@ -206,7 +214,6 @@ public class Student {
         private StudentStatus studentStatus;
         private LocalDate birthDate;
         private String description;
-     
 
         public StudentBuilder id(int id) {
             this.id = id;
@@ -272,8 +279,6 @@ public class Student {
             this.gender = gender;
             return this;
         }
-        
-     
 
         public Student build() {
             return new Student(id, gang, firstName, secondName, lastName, contactName, phone, email, address, gender,

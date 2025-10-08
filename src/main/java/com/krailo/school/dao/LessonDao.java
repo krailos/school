@@ -2,6 +2,7 @@ package com.krailo.school.dao;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,17 @@ import com.krailo.school.entity.Student;
 public class LessonDao {
 
     private static final String SQL_SELECT_ALL_LESSONS = "SELECT * FROM lesson";
-    private static final String SQL_SELECT_LESSON_BY_ID = "SELECT * FROM lesson  WHERE id = ?";
+    private static final String SQL_SELECT_BY_LESSON_ID = "SELECT * FROM lesson  WHERE id = ?";
+    private static final String SQL_SELECT_BY_STUDENT_ID = """
+            SELECT l.id, lesson_id, student_id, schedule_id , lesson_date FROM lessons_students ls
+            JOIN lesson l ON l.id = ls.lesson_id
+            WHERE ls.student_id = ?
+                        """;
+    private static final String SQL_SELECT_BY_STUDENT_ID_AND_BETWEEN_DATE = """
+            SELECT l.id, lesson_id, student_id, schedule_id , lesson_date FROM lessons_students ls
+            JOIN lesson l ON l.id = ls.lesson_id
+            WHERE ls.student_id = ? AND lesson_date BETWEEN ? AND ?
+                        """;
     private static final String SQL_INSERT_LESSON = """
             INSERT INTO lesson (schedule_id, lesson_date)
             VALUES (?, ?)
@@ -42,9 +53,10 @@ public class LessonDao {
     }
 
     public Lesson findById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_LESSON_BY_ID, lessonRowMapper, id);
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_LESSON_ID, lessonRowMapper, id);
     }
 
+    
     public int create(Lesson lesson) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -64,14 +76,22 @@ public class LessonDao {
         jdbcTemplate.update(SQL_UPDATE_BY_ID, lesson.getSchedule().getId(),
                 Optional.ofNullable(lesson.getLessonDate()).map(d -> Date.valueOf(d)).orElse(null), lesson.getId());
         List<Student> oldStudents = findById(lesson.getId()).getStudents();
-        oldStudents.stream().filter(s -> !lesson.getStudents().contains(s)).
-        forEach(s -> jdbcTemplate.update(SQL_DELETE_LESSONS_STUDENTS, lesson.getId(), s.getId()));
-        lesson.getStudents().stream().filter(s -> !oldStudents.contains(s)).
-        forEach(s -> jdbcTemplate.update(SQL_INSERT_LESSONS_STUDENTS, lesson.getId(), s.getId()));        
+        oldStudents.stream().filter(s -> !lesson.getStudents().contains(s))
+                .forEach(s -> jdbcTemplate.update(SQL_DELETE_LESSONS_STUDENTS, lesson.getId(), s.getId()));
+        lesson.getStudents().stream().filter(s -> !oldStudents.contains(s))
+                .forEach(s -> jdbcTemplate.update(SQL_INSERT_LESSONS_STUDENTS, lesson.getId(), s.getId()));
     }
 
     public void deleteById(int id) {
         jdbcTemplate.update(SQL_DELETE_BY_ID, id);
+    }
+    
+    public List<Lesson> findByStudentId(int studentId) {
+        return jdbcTemplate.query(SQL_SELECT_BY_STUDENT_ID, lessonRowMapper,  studentId);
+    }
+    
+    public List<Lesson> findByStudentIdAndBetweenDates(int studentId, LocalDate startDate, LocalDate endDate) {
+        return jdbcTemplate.query(SQL_SELECT_BY_STUDENT_ID_AND_BETWEEN_DATE, lessonRowMapper,  studentId, startDate, endDate);
     }
 
 }
