@@ -1,8 +1,10 @@
 package com.krailo.school.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Student {
 
@@ -19,7 +21,7 @@ public class Student {
     private StudentStatus studentStatus;
     private LocalDate birthDate;
     private String description;
-    private List<Discount> discounts;
+    private List<Discount> discounts = new ArrayList<Discount>();
 
     public Student() {
 

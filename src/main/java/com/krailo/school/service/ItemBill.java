@@ -1,6 +1,7 @@
 package com.krailo.school.service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import com.krailo.school.entity.Discount;
 import com.krailo.school.entity.Gang;
@@ -18,8 +19,19 @@ public class ItemBill {
     private LocalDate date;
     private Gang gang;
     private Subject subject;
+    private int itemSum;
 
     public ItemBill() {
+
+    }
+
+    public void calculateItemSum() {
+        int discountSum = 0;
+        if (discount != null) {
+            discountSum =  Optional.ofNullable(discount.getValue()).orElse(0);
+        }
+        int priceSum = price.getPrice();
+        itemSum = priceSum - priceSum * discountSum / 100;
 
     }
 
@@ -48,6 +60,9 @@ public class ItemBill {
     }
 
     public Discount getDiscount() {
+        if (discount == null) {
+            return new Discount();
+        }
         return discount;
     }
 
@@ -77,6 +92,14 @@ public class ItemBill {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public int getItemSum() {
+        return itemSum;
+    }
+
+    public void setItemSum(int itemSum) {
+        itemSum = itemSum;
     }
 
 }

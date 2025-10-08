@@ -52,7 +52,7 @@ public class DiscountDao {
             PreparedStatement ps = connection.prepareStatement(SQL_INSERT_DISCOUNT, new String[] { "id" });
             ps.setInt(1, discount.getSubject().getId());
             ps.setInt(2, discount.getStudent().getId());
-            ps.setInt(3, discount.getDiscount());
+            ps.setInt(3, discount.getValue());
             ps.setString(4, discount.getName());
             ps.setDate(5, Date.valueOf(discount.getDate()));
             return ps;
@@ -63,7 +63,7 @@ public class DiscountDao {
     
     public void update(Discount discount) {
         jdbcTemplate.update(SQL_UPDATE_BY_ID, discount.getSubject().getId(), discount.getStudent().getId(),
-                discount.getDiscount(), discount.getName(), discount.getDate(), discount.getId());
+                discount.getValue(), discount.getName(), discount.getDate(), discount.getId());
     }
 
     public void deleteById(int id) {

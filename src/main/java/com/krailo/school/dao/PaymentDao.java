@@ -14,9 +14,10 @@ import com.krailo.school.entity.Payment;
 @Repository
 public class PaymentDao {
 
-    private static final String SQL_SELECT_ALL_PRICE = "SELECT * FROM payment";
-    private static final String SQL_SELECT_PRICE_BY_ID = "SELECT * FROM payment  WHERE id = ?";
-    private static final String SQL_INSERT_PRICE = """
+    private static final String SQL_SELECT_ALL = "SELECT * FROM payment";
+    private static final String SQL_SELECT_BY_PAYMENT_ID = "SELECT * FROM payment  WHERE id = ?";
+    private static final String SQL_SELECT_BY_STUDENT_ID = "SELECT * FROM payment  WHERE student_id = ?";
+    private static final String SQL_INSERT_PAYMENT = """
             INSERT INTO payment (student_id, payment_sum, description, payment_date)
             VALUES (?, ?, ?, ?)
             """;
@@ -35,17 +36,21 @@ public class PaymentDao {
     }
 
     public List<Payment> findAll() {
-        return jdbcTemplate.query(SQL_SELECT_ALL_PRICE, paymentRowMapper);
+        return jdbcTemplate.query(SQL_SELECT_ALL, paymentRowMapper);
     }
 
+    public List<Payment> findByStudentId(int studentId) {
+        return jdbcTemplate.query(SQL_SELECT_BY_STUDENT_ID, paymentRowMapper, studentId );
+    }
+    
     public Payment findById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_PRICE_BY_ID, paymentRowMapper, id);
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_PAYMENT_ID, paymentRowMapper, id);
     }
 
     public int create(Payment payment) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(SQL_INSERT_PRICE, new String[] { "id" });
+            PreparedStatement ps = connection.prepareStatement(SQL_INSERT_PAYMENT, new String[] { "id" });
             ps.setInt(1, payment.getStudent().getId());
             ps.setInt(2, payment.getSum());
             ps.setString(3, payment.getDescription());

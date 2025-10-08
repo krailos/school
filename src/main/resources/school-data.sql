@@ -48,7 +48,7 @@ INSERT INTO schedule (audience_id, gang_id, week_day, start_time, end_time) VALU
 INSERT INTO lesson (schedule_id, lesson_date) VALUES
 ('1', '09.01.2025'),
 ('1', '09.08.2025'),
-('1', '09.15.2025');    
+('2', '09.15.2025');    
 
 INSERT INTO lessons_students (lesson_id, student_id) VALUES
 ('1', '1'),

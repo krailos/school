@@ -17,22 +17,38 @@ import com.krailo.school.service.ItemBill;
 
 @Component
 public class AppView {
+    
+    public String viewBill (Bill bill) {
+        StringBuilder sb = new StringBuilder();
+            sb.append("STUDENT ----------------- " + bill.getStudent().getLastName() + " " + bill.getStudent().getFirstName()).append(System.lineSeparator()).
+            append( "PERIOD from---------------- " + bill.getStartDate() + " to " + bill.getEndDate()).append(System.lineSeparator()).
+            append(viewItems(bill.getItems())).append(System.lineSeparator()).
+            append("Total lessons sum ------------------------   " + bill.getTotalItemSum()).append(System.lineSeparator()).append(System.lineSeparator()).
+            append(viewpPayments(bill.getPayments())).append(System.lineSeparator()).
+            append("Total payments sum -----------------------  " + bill.getTotalPaymentSum()).append(System.lineSeparator()).append(System.lineSeparator()).
+            append("BALANCE   --------------------------------  " + bill.getBalance()).append(System.lineSeparator());
+        return sb.toString();
+    }
 
     public String viewItems(List<ItemBill> biilItems) {
         StringBuilder sb = new StringBuilder();
-        String viewFormat = "lessonId = %-3d | subject = %-10s | price = %-5d | student name = %-10s | discount = %-5d | lessonDate = %-10s ";
+        String viewFormat = "lesId = %-3d | %-12s | price = %-4d | %-8s |  %-8s | discount = %-5d | lesDate = %-10s | sum = %-5d  ";
         for (ItemBill b : biilItems) {
-            sb.append(String.format(viewFormat,b.getLesson().getId(), b.getSubject().getName(), b.getPrice().getPrice(),
-                    b.getStudent().getFirstName(), b.getDiscount().getDiscount(), b.getDate()) + System.lineSeparator());
+            sb.append(String.format(viewFormat, b.getLesson().getId(), b.getSubject().getName(),
+                    b.getPrice().getPrice(), b.getStudent().getFirstName(), b.getStudent().getLastName(),
+                    Optional.ofNullable(b.getDiscount().getValue()).orElse(0), b.getDate(), b.getItemSum())
+                    + System.lineSeparator());
         }
         return sb.toString();
     }
 
     public String viewItem(ItemBill b) {
         StringBuilder sb = new StringBuilder();
-        String viewFormat = "lessonId = %-3d | subject = %-10s | price = %-5d | student name = %-10s | discount = %-5d | lessonDate = %-10s ";
-        sb.append(String.format(viewFormat,b.getLesson().getId(), b.getSubject().getName(), b.getPrice().getPrice(),
-                b.getStudent().getFirstName(), b.getDiscount().getDiscount(), b.getDate()) + System.lineSeparator());
+        String viewFormat = "lesId = %-3d | %-12s | price = %-4d | %-8s |  %-8s | discount = %-5d | lesDate = %-10s | sum = %-5d  ";
+        sb.append(String.format(viewFormat, b.getLesson().getId(), b.getSubject().getName(), b.getPrice().getPrice(),
+                b.getStudent().getFirstName(), b.getStudent().getLastName(),
+                 Optional.ofNullable(b.getDiscount().getValue()).orElse(0), b.getDate(), b.getItemSum())
+                + System.lineSeparator());
         return sb.toString();
     }
 
@@ -59,7 +75,7 @@ public class AppView {
         String viewFormat = "id = %-3d | subjectId = %-3d | studentId = %-3d | discount = %-7s | name = %-10s | date = %-10s  ";
         for (Discount d : discount) {
             sb.append(String.format(viewFormat, d.getId(), d.getSubject().getId(), d.getStudent().getId(),
-                    d.getDiscount(), d.getName(), d.getDate()) + System.lineSeparator());
+                    d.getValue(), d.getName(), d.getDate()) + System.lineSeparator());
         }
         return sb.toString();
     }
@@ -67,7 +83,7 @@ public class AppView {
     public String viewpDiscount(Discount d) {
         StringBuilder sb = new StringBuilder();
         String viewFormat = "id = %-3d | subjectId = %-3d | studentId = %-3d | discount = %-7s | name = %-10s | date = %-10s  ";
-        sb.append(String.format(viewFormat, d.getId(), d.getSubject().getId(), d.getStudent().getId(), d.getDiscount(),
+        sb.append(String.format(viewFormat, d.getId(), d.getSubject().getId(), d.getStudent().getId(), d.getValue(),
                 d.getName(), d.getDate()) + System.lineSeparator());
         return sb.toString();
     }

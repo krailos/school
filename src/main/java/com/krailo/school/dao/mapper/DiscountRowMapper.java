@@ -28,7 +28,7 @@ public class DiscountRowMapper implements RowMapper<Discount> {
         Discount discount = new Discount();
         discount.setId(rs.getInt("id"));
         discount.setName(rs.getString("name"));
-        discount.setDiscount(rs.getInt("discount"));
+        discount.setValue(rs.getInt("discount"));
         discount.setSubject(subjectDao.findById(rs.getInt("subject_id")));
         discount.setStudent(studentDao.findById(rs.getInt("student_id")));
         discount.setDate(rs.getObject("discount_date", LocalDate.class));

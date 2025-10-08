@@ -103,8 +103,16 @@ public class SchoolSpringJdbcApplication {
 
 //        System.out.println(appView.viewpPayments(paymentDao.findAll()));
 
-        System.out.println(appView.viewItems( accountServie.createItems(studentDao.findById(1),
-                LocalDate.of(2025, 9, 1), LocalDate.of(2025, 9, 15))));
+//        System.out.println(appView.viewItems( accountServie.createItems(studentDao.findById(1),
+//                LocalDate.of(2025, 9, 1), LocalDate.of(2025, 9, 15))));
+        
+        System.out.println();
+        System.out.println();
+        System.out.println(appView.viewBill( accountServie.createBill(studentDao.findById(1),
+        LocalDate.of(2025, 9, 1), LocalDate.of(2025, 9, 15))));
+        System.out.println();
+        System.out.println();
+        
 
         // ------------------ЗНАЙТИ ПО ID ------------------------
         System.out.println("----FIND BY ID---");

@@ -9,7 +9,7 @@ public class Discount {
 
     private int id;
     private String name;
-    private int discount;
+    private int value;
     private Student student;
     private Subject subject;
     private LocalDate date;
@@ -22,7 +22,7 @@ public class Discount {
         super();
         this.id = id;
         this.name = name;
-        this.discount = discount;
+        this.value = discount;
         this.student = student;
         this.subject = subject;
         this.date = date;
@@ -30,7 +30,7 @@ public class Discount {
 
     public Discount(String name, int discount, Student student, Subject subject, LocalDate date) {
         this.name = name;
-        this.discount = discount;
+        this.value = discount;
         this.student = student;
         this.subject = subject;
         this.date = date;
@@ -52,12 +52,12 @@ public class Discount {
         this.name = name;
     }
 
-    public int getDiscount() {
-        return discount;
+    public int getValue() {
+        return value;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
+    public void setValue(int discount) {
+        this.value = discount;
     }
 
     public Student getStudent() {
@@ -86,13 +86,13 @@ public class Discount {
 
     @Override
     public String toString() {
-        return "Discount [id=" + id + ", name=" + name + ", discount=" + discount + ", student=" + student
+        return "Discount [id=" + id + ", name=" + name + ", discount=" + value + ", student=" + student
                 + ", subject=" + subject + ", date=" + date + "]";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, discount, id, name, student, subject);
+        return Objects.hash(date, value, id, name, student, subject);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class Discount {
         if (getClass() != obj.getClass())
             return false;
         Discount other = (Discount) obj;
-        return Objects.equals(date, other.date) && discount == other.discount && id == other.id
+        return Objects.equals(date, other.date) && value == other.value && id == other.id
                 && Objects.equals(name, other.name) && Objects.equals(student, other.student)
                 && Objects.equals(subject, other.subject);
     }
